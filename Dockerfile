@@ -1,16 +1,15 @@
-FROM python:3.7-slim-stretch
+FROM python:3.6-slim-stretch
 
-RUN apt-get update && apt-get install -y git python3-dev gcc \
-    && rm -rf /var/lib/apt/lists/*
+RUN apt update
+RUN apt install -y python3-dev gcc
 
-COPY requirements.txt .
-
-RUN pip install --upgrade -r requirements.txt
+ADD requirements.txt requirements.txt
+RUN pip install -r requirements.txt
 
 COPY app app/
 
 RUN python app/server.py
 
-EXPOSE 5000
+EXPOSE 8080
 
 CMD ["python", "app/server.py", "serve"]
