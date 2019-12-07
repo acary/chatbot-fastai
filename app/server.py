@@ -1,5 +1,5 @@
 from starlette.applications import Starlette
-from starlette.responses import HTMLResponse, JSONResponse
+from starlette.responses import HTMLResponse, JSONResponse, FileResponse
 from starlette.staticfiles import StaticFiles
 from starlette.middleware.cors import CORSMiddleware
 import uvicorn, aiohttp, asyncio
@@ -16,6 +16,7 @@ path = Path(__file__).parent
 app = Starlette()
 app.add_middleware(CORSMiddleware, allow_origins=['*'], allow_headers=['X-Requested-With', 'Content-Type'])
 app.mount('/static', StaticFiles(directory='app/static'))
+
 
 async def download_file(url, dest):
     if dest.exists(): return
@@ -49,6 +50,13 @@ async def analyze(request):
     img = open_image(BytesIO(img_bytes))
     return JSONResponse({'result': str(learn.predict(img)[0])})
 
+@app.route("/create-entry", methods=["POST"])
+async def create_entry(request):
+    ''' Process and analyze new entry '''
+    print("Send button clicked!")
+    
+    html = path/'view'/'index.html'
+    return HTMLResponse(html.open().read())
+
 if __name__ == '__main__':
     if 'serve' in sys.argv: uvicorn.run(app, host='0.0.0.0', port=8080)
-

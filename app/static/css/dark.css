@@ -1,0 +1,80 @@
+:root {
+  /* Light theme */
+  --c-light-text: #333;
+  --c-light-background: #fff;
+  --c-light-focus: deepskyblue;
+  --c-light-interactive: mediumvioletred;
+
+  /* Dark theme */
+  --c-dark-text: #fff;
+  --c-dark-background: #333;
+  --c-dark-focus: #cc5500;
+  --c-dark-interactive: palegreen;
+}
+
+.theme-container {
+  /* Make the light theme the default */
+  --c-text: var(--c-light-text);
+  --c-background: var(--c-light-background);
+  --c-focus: var(--c-light-focus);
+  --c-interactive: var(--c-light-interactive);
+
+  padding: 1.5rem;
+  color: var(--c-text);
+  background-color: var(--c-background);
+  margin-top: -20px;
+}
+
+.dark-mode-checkbox:checked ~ .theme-container {
+  /* Override the default theme */
+  --c-text: var(--c-dark-text);
+  --c-background: var(--c-dark-background);
+  --c-focus: var(--c-dark-focus);
+  --c-interactive: var(--c-dark-interactive);
+}
+
+.dark-mode-label {
+  margin-bottom: 1em;
+}
+
+:focus,
+.dark-mode-checkbox:focus ~ .theme-container .dark-mode-label {
+  outline: 2px solid var(--c-focus);
+}
+
+
+/*
+* Replace original checkbox
+*/
+
+.dark-mode-label::before {
+  content: "\2610";
+}
+
+.dark-mode-checkbox:checked ~ .theme-container .dark-mode-label::before {
+  content: "\2611";
+}
+
+/*
+visibility-hidden utility class
+
+Source: https://github.com/h5bp/html5-boilerplate
+
+Hide only visually, but have it available for screen readers:
+https://snook.ca/archives/html_and_css/hiding-content-for-accessibility
+
+1. For long content, line feeds are not interpreted as spaces
+   and small width causes content to wrap 1 word per line:
+   https://medium.com/@jessebeach/beware-smushed-off-screen-accessible-text-5952a4c2cbfe
+*/
+.visually-hidden {
+  position: absolute;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  border: 0;
+  white-space: nowrap; /* 1. */
+}
