@@ -23,9 +23,9 @@ import pickle
 # classes = ['black', 'grizzly', 'teddys']
 
 # ULMFiT
-model_file_url = 'https://drive.google.com/uc?export=download&id=1qZHUrIOMvx5Tsj1dJbJmkHYQOY7wns2E'
+model_file_url = 'https://drive.google.com/uc?export=download&id=14rPSDte6ODkBivm_lN2gmqXd9zM9atNs'
 model_file_name = 'ulm_model'
-classes = ['banking', 'loan', 'application']
+classes = ['account_blocked','application_status','apr','balance','bill_balance','bill_due']
 
 path = Path(__file__).parent
 
@@ -56,7 +56,7 @@ async def setup_learner():
     learn = language_model_learner(data_lm, AWD_LSTM, drop_mult=0.3)
     data_clas.vocab.itos = data_lm.vocab.itos
     learn = text_classifier_learner(data_clas, arch=AWD_LSTM, drop_mult=0.5)
-    learn.load_encoder('fine_tuned_enc')
+    learn.load_encoder('LM_fine_tuned_encoder')
 
     print(learn.predict("why can't i access my chase account"))
     # Starter model (Image Classifier)
