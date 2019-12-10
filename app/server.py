@@ -10,9 +10,9 @@ import sys
 from os.path import join
 from pathlib import Path
 
-import torch
 from fastai import *
 from fastai.text import *
+import torch
 import numpy as np
 import pickle
 # from fastai.vision import *
@@ -24,7 +24,7 @@ import pickle
 
 # ULMFiT
 model_file_url = 'https://drive.google.com/uc?export=download&id=14rPSDte6ODkBivm_lN2gmqXd9zM9atNs'
-model_file_name = 'ulm_model'
+model_file_name = 'ULMFiT_classifier_model_cpu'
 classes = ['account_blocked','application_status','apr','balance','bill_balance','bill_due']
 
 path = Path(__file__).parent
@@ -42,23 +42,28 @@ async def download_file(url, dest):
             with open(dest, 'wb') as f: f.write(data)
 
 async def setup_learner():
-    await download_file(model_file_url, path/'models'/f'{model_file_name}.pth')
+    # await download_file(model_file_url, path/'models'/f'{model_file_name}.pkl')
 
-    data_lm = TextDataBunch.from_csv(path, 'notebooks/storage/Final_Intent_Dataset.csv')
-    data_lm = TextLMDataBunch.load(path, 'tmp_lm', bs=32)
+    loaded_model = load_learner(path, '/notebooks/storage/ULMFiT_classifier_model_cpu.pkl')
+    loaded_model.predict("tell me my hsbc card credit limit")
 
-    data_clas = (TextList.from_csv(path, 'notebooks/storage/Final_Intent_Dataset.csv', cols='text')
-                .split_from_df(col=2)
-                .label_from_df(cols=0)
-                .databunch())
-    data_clas = TextClasDataBunch.from_csv(path, 'notebooks/storage/Final_Intent_Dataset.csv', vocab=data_lm.vocab, bs=32)
-    data_clas.save('tmp_clas')
-    learn = language_model_learner(data_lm, AWD_LSTM, drop_mult=0.3)
-    data_clas.vocab.itos = data_lm.vocab.itos
-    learn = text_classifier_learner(data_clas, arch=AWD_LSTM, drop_mult=0.5)
-    learn.load_encoder('LM_fine_tuned_encoder')
+    # Data setup (not needed)
+    # data_lm = TextDataBunch.from_csv(path, 'notebooks/storage/Final_Intent_Dataset.csv')
+    # data_lm.save('tmp_lm')
+    # data_lm = TextLMDataBunch.load(path, '/tmp_lm', bs=32)
+    #
+    # data_clas = (TextList.from_csv(path, 'notebooks/storage/Final_Intent_Dataset.csv', cols='text')
+    #             .split_from_df(col=2)
+    #             .label_from_df(cols=0)
+    #             .databunch())
+    # data_clas = TextClasDataBunch.from_csv(path, 'notebooks/storage/Final_Intent_Dataset.csv', vocab=data_lm.vocab, bs=32)
+    # data_clas.save('tmp_clas')
+    # learn = language_model_learner(data_lm, AWD_LSTM, drop_mult=0.3)
+    # data_clas.vocab.itos = data_lm.vocab.itos
+    # learn = text_classifier_learner(data_clas, arch=AWD_LSTM, drop_mult=0.5)
+    # learn.load(model_file_name)
+    # learn.load_encoder('LM_fine_tuned_encoder')
 
-    print(learn.predict("why can't i access my chase account"))
     # Starter model (Image Classifier)
     # data_bunch = ImageDataBunch.single_from_classes(path, classes,
     #     ds_tfms=get_transforms(), size=224).normalize(imagenet_stats)
