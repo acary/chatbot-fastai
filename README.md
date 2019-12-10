@@ -23,4 +23,5 @@ Serves Machine Learning models exposed as a REST API.
 
 ### Run locally
 
+1. Install requirements: ```pip install -r requirements.txt```
 1. Run: ```python app/server.py serve``` to run the application
