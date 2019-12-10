@@ -44,8 +44,8 @@ async def download_file(url, dest):
 async def setup_learner():
     # await download_file(model_file_url, path/'models'/f'{model_file_name}.pkl')
 
-    loaded_model = load_learner(path, '/notebooks/storage/ULMFiT_classifier_model_cpu.pkl')
-    loaded_model.predict("tell me my hsbc card credit limit")
+    loaded_model = load_learner(path, 'models/ULMFiT_classifier_model_cpu.pkl')
+    learn = loaded_model.predict("tell me my hsbc card credit limit")
 
     # Data setup (not needed)
     # data_lm = TextDataBunch.from_csv(path, 'notebooks/storage/Final_Intent_Dataset.csv')
