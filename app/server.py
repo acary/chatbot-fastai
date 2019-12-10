@@ -42,33 +42,9 @@ async def download_file(url, dest):
             with open(dest, 'wb') as f: f.write(data)
 
 async def setup_learner():
-    # await download_file(model_file_url, path/'models'/f'{model_file_name}.pkl')
 
     loaded_model = load_learner(path, 'models/ULMFiT_classifier_model_cpu.pkl')
     learn = loaded_model.predict("tell me my hsbc card credit limit")
-
-    # Data setup (not needed)
-    # data_lm = TextDataBunch.from_csv(path, 'notebooks/storage/Final_Intent_Dataset.csv')
-    # data_lm.save('tmp_lm')
-    # data_lm = TextLMDataBunch.load(path, '/tmp_lm', bs=32)
-    #
-    # data_clas = (TextList.from_csv(path, 'notebooks/storage/Final_Intent_Dataset.csv', cols='text')
-    #             .split_from_df(col=2)
-    #             .label_from_df(cols=0)
-    #             .databunch())
-    # data_clas = TextClasDataBunch.from_csv(path, 'notebooks/storage/Final_Intent_Dataset.csv', vocab=data_lm.vocab, bs=32)
-    # data_clas.save('tmp_clas')
-    # learn = language_model_learner(data_lm, AWD_LSTM, drop_mult=0.3)
-    # data_clas.vocab.itos = data_lm.vocab.itos
-    # learn = text_classifier_learner(data_clas, arch=AWD_LSTM, drop_mult=0.5)
-    # learn.load(model_file_name)
-    # learn.load_encoder('LM_fine_tuned_encoder')
-
-    # Starter model (Image Classifier)
-    # data_bunch = ImageDataBunch.single_from_classes(path, classes,
-    #     ds_tfms=get_transforms(), size=224).normalize(imagenet_stats)
-    # learn = cnn_learner(data_bunch, models.resnet34, pretrained=False)
-    # learn.load(model_file_name)
 
     return learn
 
