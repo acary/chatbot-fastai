@@ -43,8 +43,7 @@ async def download_file(url, dest):
 
 async def setup_learner():
 
-    loaded_model = load_learner(path, 'models/ULMFiT_classifier_model_cpu.pkl')
-    learn = loaded_model.predict("tell me my hsbc card credit limit")
+    learn = load_learner(path, 'models/ULMFiT_classifier_model_cpu.pkl')
 
     return learn
 
@@ -71,6 +70,9 @@ async def create_entry(request):
     print("Send button clicked!")
     data = await request.form()
     print(data)
+
+    print(learn.predict("what's the apr on my capital one venture card"))
+    print(learn.predict("has my mastercard application gone through the process"))
 
     return JSONResponse({'result': 'OK OK'})
 
