@@ -81,7 +81,7 @@ async def create_entry(request):
     y = str(x[0])
     print(y)
 
-    return JSONResponse({'result': y})
+    return JSONResponse({'result': 'I have identified your question to be in the category: ' + y})
 
 
 if __name__ == '__main__':

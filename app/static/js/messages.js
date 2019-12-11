@@ -2,11 +2,14 @@ function submit_message() {
 
   var name = document.getElementById("name");
   var message = document.getElementById("message");
+  var sent_msg = document.getElementById("sent_msg");
 
   var entry = {
     name: name.value,
     message: message.value
   };
+
+  sent_msg.innerText = entry.message;
 
   fetch(`${window.origin}/create-entry`, {
       method: "POST",
@@ -25,7 +28,7 @@ function submit_message() {
       response.json().then(function(data) {
         console.log(data.result);
         document.getElementById('message').value = '';
-        document.getElementById('messages').innerText = data.result + " (class result)";
+        document.getElementById('messages').innerText = data.result;
       });
     })
     .catch(function(error) {
