@@ -23,9 +23,9 @@ function submit_message() {
         return;
       }
       response.json().then(function(data) {
-        console.log(data);
+        console.log(data.result);
         document.getElementById('message').value = '';
-        document.getElementById('messages').innerText = data;
+        document.getElementById('messages').innerText = data.result + " (class result)";
       });
     })
     .catch(function(error) {
