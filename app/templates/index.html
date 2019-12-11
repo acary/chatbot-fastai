@@ -1,0 +1,99 @@
+<html lang='en'>
+
+{% include 'site_assets.html' %}
+
+<body>
+
+  <input id="dark-mode" class="dark-mode-checkbox visually-hidden" type="checkbox">
+  <div class="theme-container grow">
+    <div class="container overflow-auto">
+      <h3 class="text-center">Customer Service Chat 🤖</h3>
+      <label class="dark-mode-label py-2 d-none d-md-inline-block" for="dark-mode">
+        Dark mode
+      </label>
+      <div class="messaging">
+        <div class="inbox_msg">
+          <div class="inbox_people">
+            <div class="headind_srch">
+              <div class="recent_heading">
+                <h4>Recent</h4>
+              </div>
+            </div>
+            <div class="inbox_chat">
+              <div class="chat_list active_chat">
+                <div class="chat_people">
+                  <div class="chat_img">🤖</div>
+                  <div class="chat_ib">
+                    <a href="/" style="text-decoration: none;">
+                      <h5>Agent Smith (General)<span class="chat_date">Dec 14</span></h5>
+                      <p>Hello, how may we help you today?</p>
+                    </a>
+                  </div>
+                </div>
+              </div>
+
+              <div class="chat_list">
+                <div class="chat_people">
+                  <div class="chat_img">🤖</div>
+                  <div class="chat_ib">
+                    <a href="/chat" style="text-decoration: none;">
+                      <h5>Agent Fury (Specialist)<span class="chat_date">Dec 14</span></h5>
+                      <p>Let's see if we can help...</p>
+                    </a>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+          <div class="mesgs">
+            <div class="msg_history">
+
+              <div class="incoming_msg">
+                <div class="incoming_msg_img">🤖</div>
+                <div class="received_msg">
+                  <div class="received_withd_msg">
+                    <p>Hello, how may we help you today?</p>
+                    <span class="time_date"> 11:01 AM | Today</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="outgoing_msg">
+                <div class="sent_msg" id="sent_msg">
+                  <p>I have a question related to my account...</p>
+                  <span class="time_date"> 11:01 AM | Today</span>
+                </div>
+              </div>
+
+              <div class="incoming_msg">
+                <div class="incoming_msg_img">🤖</div>
+                <div class="received_msg">
+                  <div class="received_withd_msg">
+                    <p>
+                      <div class="bot_response" id="messages">Sure, I will attempt to identify the category of your intent. <i class="fas fa-spinner"></i></div>
+                    </p>
+                    <span class="time_date"> 11:02 AM | Today</span>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+            <div class="type_msg">
+              <div class="input_msg_write">
+                <input type="text" class="form-control" id="name" placeholder="name" hidden="true">
+                <input type="text" id="message" class="write_msg" placeholder="Type a message" onkeydown="if (event.keyCode == 13)
+                      document.getElementById('msg_send_btn').click()" />
+                <button id="msg_send_btn" class="msg_send_btn" onclick="submit_message();" type="button"><i class="fa fa-paper-plane-o" aria-hidden="true"></i></button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</body>
+
+</html>

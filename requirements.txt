@@ -6,3 +6,4 @@ python-multipart
 aiofiles
 aiohttp
 numpy==1.16.2
+Jinja2==2.10.3
