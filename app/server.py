@@ -44,7 +44,6 @@ routes = [
 classes = ['account_blocked','application_status','apr','balance','bill_balance','bill_due','card_declined','credit_limit','credit_limit_change','credit_score','damaged_card','direct_deposit','exchange_rate','expiration_date','freeze_account','improve_credit_score','insurance','insurance_change','interest_rate','international_fees','min_payment','new_card','oos','order_checks','pay_bill','pin_change','redeem_rewards','replacement_card_duration','report_fraud','report_lost_card','rewards_balance','rollover_401k','taxes','transactions','transfer']
 
 # ULMFiT
-model_file_name = 'ULMFiT_classifier_model_cpu'
 async def setup_learner():
     ''' Load model '''
     learn = load_learner(path, 'models/ULMFiT_classifier_model_cpu.pkl')
@@ -52,7 +51,6 @@ async def setup_learner():
 
 
 # OOS
-model_file_name = 'ULMFiT_classifier_model_OOS_Plus_cpu'
 async def setup_learner_oos():
     ''' Load OOS model '''
     learn_oos = load_learner(path, 'models/ULMFiT_classifier_model_OOS_Plus_cpu.pkl')
@@ -82,10 +80,6 @@ async def create_entry(request):
     ''' Process and analyze new message entry '''
     print("Send button clicked!")
 
-    # Resolve out-of-scope queries
-    async def resolve_oos():
-        print("Resolving oos...")
-
     # Retrieve message from request
     data = await request.json()
     message = data['message']
@@ -95,16 +89,28 @@ async def create_entry(request):
     y = str(x[0])
     print(y)
 
-    # Handle out-of-scope queries
-    if y == 'oos':
-        print("Identified as Out-of-Scope")
-        y = learn_oos.predict(y)
-        z = str(y[0])
-        print(z)
-        y = z
+    # Return final classification result
+    return JSONResponse({'result': 'I have identified your question to be in the category: ' + y})
+
+
+# Handle message (OOS)
+@app.route("/create-entry-oos", methods=["POST"])
+async def create_entry(request):
+    ''' Process and analyze new message entry with OOS '''
+    print("Send button clicked! (OOS)")
+
+    # Retrieve message from request
+    data = await request.json()
+    message = data['message']
+
+    # Evaluate prediction
+    x = learn_oos.predict(message)
+    y = str(x[0])
+    print(y)
 
     # Return final classification result
     return JSONResponse({'result': 'I have identified your question to be in the category: ' + y})
+
 
 if __name__ == '__main__':
     if 'serve' in sys.argv:
