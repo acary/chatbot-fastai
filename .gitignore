@@ -1,9 +1,4 @@
-app/export.pkl
-app/models/*
-app/models/model.pth
-app/models/fine_tuned_enc.pth
-app/models/ulm_model.pth
-app/tmp_clas
+
 
 # Created by https://www.gitignore.io/api/linux,macos,python,pycharm
 
